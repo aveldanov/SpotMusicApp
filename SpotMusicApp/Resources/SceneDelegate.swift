@@ -26,9 +26,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if #available(iOS 15.0, *){
             let appearanceTabBar = UITabBarAppearance()
 
-//            let appearanceNavBar = UINavigationBarAppearance()
+            let appearanceNavBar = UIBarAppearance()
 
-//            UITabBar.appearance().scrollEdgeAppearance = appearanceTabBar
+            UITabBar.appearance().scrollEdgeAppearance = appearanceTabBar
 //            UINavigationBar.appearance().scrollEdgeAppearance = appearanceNavBar
         }
 
