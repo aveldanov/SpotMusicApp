@@ -29,6 +29,7 @@
 		3468D2DC28D0317100F67E4A /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3468D2DB28D0317100F67E4A /* AudioTrack.swift */; };
 		3468D2DE28D0317B00F67E4A /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3468D2DD28D0317B00F67E4A /* Artist.swift */; };
 		3468D2E028D0318300F67E4A /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3468D2DF28D0318300F67E4A /* UserProfile.swift */; };
+		34FF495728D2730000F4E980 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FF495628D2730000F4E980 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		3468D2DB28D0317100F67E4A /* AudioTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrack.swift; sourceTree = "<group>"; };
 		3468D2DD28D0317B00F67E4A /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		3468D2DF28D0318300F67E4A /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		34FF495628D2730000F4E980 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				3468D2A328D0287800F67E4A /* AppDelegate.swift */,
 				3468D2A528D0287800F67E4A /* SceneDelegate.swift */,
 				3468D2AC28D0287900F67E4A /* Assets.xcassets */,
+				34FF495628D2730000F4E980 /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				3468D2C628D0301000F67E4A /* AuthViewController.swift in Sources */,
 				3468D2A428D0287800F67E4A /* AppDelegate.swift in Sources */,
 				3468D2E028D0318300F67E4A /* UserProfile.swift in Sources */,
+				34FF495728D2730000F4E980 /* Extensions.swift in Sources */,
 				3468D2C228D02FEE00F67E4A /* LibraryViewController.swift in Sources */,
 				3468D2DE28D0317B00F67E4A /* Artist.swift in Sources */,
 				3468D2D028D0310D00F67E4A /* PlaylistViewController.swift in Sources */,
