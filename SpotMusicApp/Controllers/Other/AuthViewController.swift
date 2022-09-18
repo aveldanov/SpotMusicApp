@@ -47,11 +47,12 @@ class AuthViewController: UIViewController, WKNavigationDelegate {
             return
         }
 
-        // Exchange the code from the string for access token
-        let component = URLComponents(string: url.absoluteString)
-        guard let code = component?.queryItems?.first(where: {$0.name == "code" })?.value else {
+        // Exchange the code from the url for access token
+        guard let code = URLComponents(string: url.absoluteString)?.queryItems?.first(where: {$0.name == "code" })?.value else {
             return
         }
+
+        print(code, "code")
 
     }
     

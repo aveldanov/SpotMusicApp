@@ -47,4 +47,19 @@ final class AuthManager {
     private var shouldRefreshToken: Bool {
         return false
     }
+
+
+    public func exchangeCodeForToken(code: String, completion: @escaping (Bool)->Void) {
+        // get token
+
+
+    }
+
+    public func refreshAccessToken() {
+        
+    }
+
+    public func cacheToken() {
+
+    }
 }
