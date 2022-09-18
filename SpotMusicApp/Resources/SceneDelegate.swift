@@ -25,9 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             navVC.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
             window?.rootViewController = navVC
         }
+        print(AuthManager.shared.signInURL?.absoluteURL,"STRING")
 
-
-//         window?.rootViewController = UINavigationController(rootViewController: LoginController())
+        // window?.rootViewController = UINavigationController(rootViewController: LoginController())
 
         //fixing transparent bar
 
@@ -37,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let appearanceNavBar = UIBarAppearance()
 
             UITabBar.appearance().scrollEdgeAppearance = appearanceTabBar
-//            UINavigationBar.appearance().scrollEdgeAppearance = appearanceNavBar
+            //            UINavigationBar.appearance().scrollEdgeAppearance = appearanceNavBar
         }
 
         window?.makeKeyAndVisible()

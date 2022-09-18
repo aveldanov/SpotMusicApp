@@ -29,11 +29,29 @@ class AuthViewController: UIViewController, WKNavigationDelegate {
         view.backgroundColor = .systemBackground
         webView.navigationDelegate = self
         view.addSubview(webView)
+        guard let url = AuthManager.shared.signInURL else {
+            return
+        }
+        webView.load(URLRequest(url: url))
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         webView.frame = view.bounds
+
+    }
+
+
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        guard let url = webView.url else {
+            return
+        }
+
+        // Exchange the code from the string for access token
+        let component = URLComponents(string: url.absoluteString)
+        guard let code = component?.queryItems?.first(where: {$0.name == "code" })?.value else {
+            return
+        }
 
     }
     
