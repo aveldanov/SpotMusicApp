@@ -25,7 +25,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             navVC.viewControllers.first?.navigationItem.largeTitleDisplayMode = .always
             window?.rootViewController = navVC
         }
-        print(AuthManager.shared.signInURL?.absoluteURL,"STRING")
 
         // window?.rootViewController = UINavigationController(rootViewController: LoginController())
 
