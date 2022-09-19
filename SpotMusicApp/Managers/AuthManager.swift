@@ -16,15 +16,15 @@ final class AuthManager {
         static let  clientID = "906d20caba24486eb1a6e9014f87a5ef"
         static let clientSecret = "fc2eb44d26aa4b4b8b1df0bf3e2e5e48"
         static let tokenAPIURL = "https://accounts.spotify.com/api/token"
+        static let redirect_uri = "https://www.google.com/"
+        static let scope = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
     }
 
     private init() {}
 
     public var signInURL: URL? {
         let base = "https://accounts.spotify.com/authorize"
-        let scope = "user-read-private"
-        let redirect_uri = "https://www.google.com/"
-        let string = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(scope)&redirect_uri=\(redirect_uri)&show_dialog=TRUE"
+        let string = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(Constants.scope)&redirect_uri=\(Constants.redirect_uri)&show_dialog=TRUE"
 
         return URL(string: string)
     }
@@ -65,7 +65,7 @@ final class AuthManager {
         var components = URLComponents()
         components.queryItems = [URLQueryItem(name: "grant_type", value: "authorization_code"),
                                  URLQueryItem(name: "code", value: code),
-                                 URLQueryItem(name: "redirect_uri", value: "https://www.google.com/")]
+                                 URLQueryItem(name: "redirect_uri", value: Constants.redirect_uri)]
 
 
         var request = URLRequest(url: url)
@@ -158,16 +158,13 @@ final class AuthManager {
             }
 
         }.resume()
-
-
     }
 
     public func cacheToken(result: AuthResponse) {
         UserDefaults.standard.setValue(result.access_token, forKey: "access_token")
-        if let refreshToken = refreshToken {
-            UserDefaults.standard.setValue(result.refresh_token, forKey: "refresh_token")
+        if let refreshToken = result.refresh_token {
+            UserDefaults.standard.setValue(refreshToken, forKey: "refresh_token")
         }
         UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: "expirationDate")
-
     }
 }
