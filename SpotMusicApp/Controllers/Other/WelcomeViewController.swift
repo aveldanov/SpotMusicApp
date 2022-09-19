@@ -52,7 +52,17 @@ class WelcomeViewController: UIViewController {
 
     private func handleSignIn(success: Bool) {
         // login user or yell for error
-
+        guard success else {
+            let alert = UIAlertController(title: "Oops",
+                                          message: "Something went wrong",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        let mainAppTabVC = TabBarViewController()
+        mainAppTabVC.modalPresentationStyle = .fullScreen
+        present(mainAppTabVC, animated: true, completion: nil)
     }
 
 }

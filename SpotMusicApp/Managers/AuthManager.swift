@@ -52,7 +52,6 @@ final class AuthManager {
         let currentDate = Date()
         let fiveMinutes: TimeInterval = 300 //5 mins
 
-
         return currentDate.addingTimeInterval(fiveMinutes) >= expirationDate // refresh 5 mins before expiration date
     }
 
@@ -75,6 +74,59 @@ final class AuthManager {
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-type")
         request.httpBody = components.query?.data(using: .utf8)
 
+        let basicToken = Constants.clientID + ":" + Constants.clientSecret
+        let data = basicToken.data(using: .utf8)
+
+        guard let base64String = data?.base64EncodedString() else {
+            completion(false)
+            print("[AuthManager] FAILURE to get base64")
+            return
+        }
+
+        request.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
+
+        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard let data = data, error == nil else {
+                completion(false)
+                return
+            }
+
+            do {
+                let result = try JSONDecoder().decode(AuthResponse.self, from: data)
+                self?.cacheToken(result: result)
+
+                completion(true)
+            } catch {
+                completion(false)
+            }
+
+        }.resume()
+    }
+
+    public func refreshIfNeeded(completion: @escaping (Bool)->Void) {
+        guard shouldRefreshToken else {
+            completion(true) // token is still valid
+            return
+        }
+        guard let refreshToken = refreshToken else {
+            return
+        }
+
+        // get token
+        guard let url = URL(string: Constants.tokenAPIURL) else {
+            return
+        }
+
+        var components = URLComponents()
+        components.queryItems = [URLQueryItem(name: "grant_type", value: "refresh_token"),
+                                 URLQueryItem(name: "refresh_token", value: refreshToken)]
+
+
+        var request = URLRequest(url: url)
+
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-type")
+        request.httpBody = components.query?.data(using: .utf8)
 
         let basicToken = Constants.clientID + ":" + Constants.clientSecret
         let data = basicToken.data(using: .utf8)
@@ -96,10 +148,8 @@ final class AuthManager {
             }
 
             do {
-
-
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
-
+                print("[AuthManager] Successfully refreshed - refresh_token", refreshToken)
                 self?.cacheToken(result: result)
 
                 completion(true)
@@ -108,15 +158,15 @@ final class AuthManager {
             }
 
         }.resume()
-    }
 
-    public func refreshAccessToken() {
-        
+
     }
 
     public func cacheToken(result: AuthResponse) {
         UserDefaults.standard.setValue(result.access_token, forKey: "access_token")
-        UserDefaults.standard.setValue(result.refresh_token, forKey: "refresh_token")
+        if let refreshToken = refreshToken {
+            UserDefaults.standard.setValue(result.refresh_token, forKey: "refresh_token")
+        }
         UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: "expirationDate")
 
     }

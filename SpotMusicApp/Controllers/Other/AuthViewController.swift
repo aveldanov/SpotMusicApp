@@ -49,7 +49,7 @@ class AuthViewController: UIViewController, WKNavigationDelegate {
 
         // Exchange the code from the url for access token
         guard let code = URLComponents(string: url.absoluteString)?.queryItems?.first(where: {$0.name == "code" })?.value else {
-            print("ISSUE")
+            print("[AuthViewController] ISSUE")
             return
         }
         webView.isHidden = true
