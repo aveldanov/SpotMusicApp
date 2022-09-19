@@ -105,8 +105,14 @@ final class AuthManager {
         }.resume()
     }
 
+    // array of escaping closures
+    private var onRefreshBlocks = [(String)->Void]()
+
+    /// Supplies valid token to be used with API Calls
     public func withValidToken(completion: @escaping (String)->Void) {
         guard !refreshingToken else {
+            //Append completion
+            onRefreshBlocks.append(completion) // helps to avoid redundunt refresh
             return
         }
 
@@ -180,6 +186,8 @@ final class AuthManager {
             do {
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
                 print("[AuthManager] Successfully refreshed - refresh_token", refreshToken)
+                self?.onRefreshBlocks.forEach{$0(result.access_token)}
+                self?.onRefreshBlocks.removeAll()
                 self?.cacheToken(result: result)
 
                 completion(true)
