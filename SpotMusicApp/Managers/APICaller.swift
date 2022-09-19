@@ -13,7 +13,7 @@ final class APICaller {
     private init() {}
 
     struct Constants {
-        static let baseAPIURL = "https://api.spotify.com/v1"
+        static let baseAPIURL = "https://api.spotify.com"
         
     }
 
@@ -23,9 +23,11 @@ final class APICaller {
 
     public func getUserProfile(completion: @escaping (Result<UserProfile,Error>)->Void) {
         createRequest(
-            with: URL(string: ""),
+            with: URL(string: Constants.baseAPIURL + "/v1/me"),
             type: .GET) { baseRequest in
                 URLSession.shared.dataTask(with: baseRequest) { data, response, error in
+
+                    print(data, baseRequest)
                     guard let data = data, error == nil else {
                         completion(.failure(APIError.failedToGetData))
                         return

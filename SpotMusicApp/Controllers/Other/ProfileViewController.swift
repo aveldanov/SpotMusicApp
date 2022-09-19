@@ -16,7 +16,7 @@ class ProfileViewController: UIViewController {
         APICaller.shared.getUserProfile { result in
             switch result {
             case .success(let model):
-                break
+                print(model)
             case .failure(let error):
                 print(error.localizedDescription)
             }
