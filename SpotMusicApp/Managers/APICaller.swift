@@ -25,16 +25,15 @@ final class APICaller {
             with: URL(string: Constants.baseAPIURL + "/v1/me"),
             type: .GET) { baseRequest in
                 URLSession.shared.dataTask(with: baseRequest) { data, response, error in
-                    print(data, baseRequest)
                     guard let data = data, error == nil else {
                         completion(.failure(APIError.failedToGetData))
                         return
                     }
 
                     do {
-
                         let result = try JSONDecoder().decode(UserProfile.self, from: data)
                         print(result)
+                        completion(.success(result))
                     } catch {
                         print(error.localizedDescription)
                         completion(.failure(error))
@@ -61,9 +60,6 @@ final class APICaller {
             request.httpMethod = type.rawValue
             request.timeoutInterval = 30
             completion(request)
-
         }
-
-
     }
 }
