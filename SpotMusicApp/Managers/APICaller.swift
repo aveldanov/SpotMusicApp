@@ -14,7 +14,6 @@ final class APICaller {
 
     struct Constants {
         static let baseAPIURL = "https://api.spotify.com"
-        
     }
 
     enum APIError: Error {
@@ -26,7 +25,6 @@ final class APICaller {
             with: URL(string: Constants.baseAPIURL + "/v1/me"),
             type: .GET) { baseRequest in
                 URLSession.shared.dataTask(with: baseRequest) { data, response, error in
-
                     print(data, baseRequest)
                     guard let data = data, error == nil else {
                         completion(.failure(APIError.failedToGetData))
@@ -39,8 +37,6 @@ final class APICaller {
                     } catch {
                         completion(.failure(error))
                     }
-
-
                 }.resume()
             }
     }
