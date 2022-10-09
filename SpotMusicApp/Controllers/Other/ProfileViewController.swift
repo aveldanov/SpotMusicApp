@@ -17,7 +17,6 @@ class ProfileViewController: UIViewController {
         return table
     }()
 
-
     private var models = [String]()
 
     // MARK: - Lifecycle

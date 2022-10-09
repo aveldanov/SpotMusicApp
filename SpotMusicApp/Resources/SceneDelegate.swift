@@ -18,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
 
         if AuthManager.shared.isSignedIn {
+            // starts refreshing token one app is loaded 
+            AuthManager.shared.refreshIfNeeded(completion: nil )
             window?.rootViewController = TabBarViewController()
         } else {
             let navVC = UINavigationController(rootViewController: WelcomeViewController())
