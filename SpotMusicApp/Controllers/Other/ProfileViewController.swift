@@ -5,6 +5,7 @@
 //  Created by Anton Veldanov on 9/12/22.
 //
 
+import SDWebImage
 import UIKit
 
 class ProfileViewController: UIViewController {
@@ -62,6 +63,8 @@ class ProfileViewController: UIViewController {
         models.append("Tier: \(model.product)")
 
 
+        createTableHeader(with: model.images.first?.url)
+
         tableView.reloadData()
 
     }
@@ -73,6 +76,33 @@ class ProfileViewController: UIViewController {
         label.textColor = .secondaryLabel
         view.addSubview(label)
         label.center = view.center
+    }
+
+    private func createTableHeader(with urlString: String?) {
+        guard let urlString = urlString, let url = URL(string: urlString) else {
+            return
+        }
+
+        let headerView = UIView(frame: CGRect(x: 0,
+                                              y: 0,
+                                              width: view.width,
+                                              height: view.width/1.5))
+        let imageSize: CGFloat = headerView.height/2
+        let imageView = UIImageView(frame: CGRect(x: 0,
+                                                  y: 0,
+                                                  width: imageSize,
+                                                  height: imageSize))
+
+        headerView.addSubview(imageView)
+        imageView.center = headerView.center
+        imageView.contentMode = .scaleAspectFill
+        imageView.sd_setImage(with: url, completed: nil)
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = imageSize/2
+
+
+
+        tableView.tableHeaderView = headerView
     }
 }
 
