@@ -36,8 +36,36 @@ class HomeViewController: UIViewController {
 //    }
 
 
+//    private func fetchData() {
+//        APICaller.shared.getFeaturedPlaylists { result in
+//            switch result {
+//            case .success(let model):
+//                print("[HomeViewController] model", model)
+//                break
+//            case .failure(let error):
+//                print("[HomeViewController] error", error.localizedDescription)
+//                break
+//            }
+//        }
+//    }
+
+//
+//    private func fetchData() {
+//        APICaller.shared.getRecommendaitons { result in
+//            switch result {
+//            case .success(let model):
+//                print("[HomeViewController] model", model)
+//                break
+//            case .failure(let error):
+//                print("[HomeViewController] error", error.localizedDescription)
+//                break
+//            }
+//        }
+//    }
+
+
     private func fetchData() {
-        APICaller.shared.getFeaturedPlaylists { result in
+        APICaller.shared.getRecommendedGenres { result in
             switch result {
             case .success(let model):
                 print("[HomeViewController] model", model)
