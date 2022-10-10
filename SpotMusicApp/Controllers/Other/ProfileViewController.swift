@@ -43,6 +43,7 @@ class ProfileViewController: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):
+                    print("[ProfileViewController] user profile", model)
                     self?.updateUI(with: model)
                 case .failure(let error):
                     print("[ProfileViewController] Profile error: \(error.localizedDescription)")
@@ -61,11 +62,9 @@ class ProfileViewController: UIViewController {
         models.append("User ID: \(model.id)")
         models.append("Tier: \(model.product)")
 
-
         createTableHeader(with: model.images.first?.url)
 
         tableView.reloadData()
-
     }
 
     private func failedToGetProfile() {

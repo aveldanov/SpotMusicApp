@@ -13,10 +13,26 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         title = "Home"
         view.backgroundColor = .orange
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"),
-                                                            style: .done,
-                                                            target: self,
-                                                            action: #selector(didTapSettings))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "gear"),
+            style: .done,
+            target: self,
+            action: #selector(didTapSettings))
+
+        fetchData()
+    }
+
+    private func fetchData() {
+        APICaller.shared.getNewReleases { result in
+            switch result {
+            case .success(let model):
+                print("[HomeViewController] model", model)
+                break
+            case .failure(let error):
+                print("[HomeViewController] error", error.localizedDescription)
+                break
+            }
+        }
     }
 
     @objc func didTapSettings() {

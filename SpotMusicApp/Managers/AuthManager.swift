@@ -27,7 +27,6 @@ final class AuthManager {
     public var signInURL: URL? {
         let base = "https://accounts.spotify.com/authorize"
         let string = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(Constants.scope)&redirect_uri=\(Constants.redirect_uri)&show_dialog=TRUE"
-
         return URL(string: string)
     }
 
@@ -95,8 +94,8 @@ final class AuthManager {
 
             do {
                 let result = try JSONDecoder().decode(AuthResponse.self, from: data)
+                print("[AuthManager] token", result)
                 self?.cacheToken(result: result)
-
                 completion(true)
             } catch {
                 completion(false)
@@ -116,7 +115,6 @@ final class AuthManager {
             return
         }
 
-
         if shouldRefreshToken {
             // Refresh
             refreshIfNeeded { [weak self] success in
@@ -125,6 +123,7 @@ final class AuthManager {
                 }
             }
         } else if let token = accessToken {
+            print("[AuthManager] valid token:", token)
             completion(token)
         }
     }

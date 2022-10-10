@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
 
         if AuthManager.shared.isSignedIn {
-            // starts refreshing token one app is loaded 
+            // starts refreshing token one app is loaded
             AuthManager.shared.refreshIfNeeded(completion: nil )
             window?.rootViewController = TabBarViewController()
         } else {
@@ -28,23 +28,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = navVC
         }
 
-        // window?.rootViewController = UINavigationController(rootViewController: LoginController())
+//         window?.rootViewController = UINavigationController(rootViewController: AuthViewController())
 
         //fixing transparent bar
 
         if #available(iOS 15.0, *){
             let appearanceTabBar = UITabBarAppearance()
-
             let appearanceNavBar = UIBarAppearance()
-
             UITabBar.appearance().scrollEdgeAppearance = appearanceTabBar
             //            UINavigationBar.appearance().scrollEdgeAppearance = appearanceNavBar
         }
 
         window?.makeKeyAndVisible()
 
+        print("[SceneDelegate] url: ", AuthManager.shared.signInURL?.absoluteString)
         AuthManager.shared.refreshIfNeeded { success in
-            print(success)
+            print("[SceneDelegate] success",success)
         }
     }
 
