@@ -8,6 +8,17 @@
 import Foundation
 
 
+struct NewReleasesResponse: Codable {
+    let albums: AlbumsResponse
+}
+
+struct AlbumsResponse: Codable {
+    let items: [Album]
+}
+
+struct Album: Codable {
+
+}
 
 /*
 
@@ -30,7 +41,7 @@ import Foundation
              );
              "available_markets" =                 (
                  AD,
-             
+
                  ZM,
                  ZW
              );
