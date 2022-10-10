@@ -42,7 +42,7 @@ final class APICaller {
             }
     }
 
-    public func getNewReleases(completion: @escaping (Result<String, Error>)->Void) {
+    public func getNewReleases(completion: @escaping (Result<NewReleasesResponse, Error>)->Void) {
         createRequest(with: URL(string: Constants.baseAPIURL+"/browse/new-releases?limit=1"), type: .GET) { request in
             URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
@@ -52,10 +52,35 @@ final class APICaller {
                 }
                 print("[APICaller getNewReleases] success data", data)
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print("[APICaller getNewReleases] success json", json)
+//                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    let result = try JSONDecoder().decode(NewReleasesResponse.self, from: data)
+                    print("[APICaller getNewReleases] success json", result)
+                    completion(.success(result))
                 } catch {
                     print("[APICaller getNewReleases] failure", error.localizedDescription)
+                    completion(.failure(error))
+                }
+
+            }.resume()
+        }
+    }
+
+    public func getFeaturedPlaylists(completion: @escaping (Result<String, Error>)->Void) {
+        createRequest(with: URL(string: Constants.baseAPIURL+"/browse/featured-playlists?limit=2"), type: .GET) { request in
+            URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    print("[APICaller getFeaturedPlaylists] failure", error?.localizedDescription)
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                print("[APICaller getFeaturedPlaylists] success data", data)
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    let result = try JSONDecoder().decode(NewReleasesResponse.self, from: data)
+                    print("[APICaller getFeaturedPlaylists] success json", json)
+//                    completion(.success(result))
+                } catch {
+                    print("[APICaller getFeaturedPlaylists] failure", error.localizedDescription)
                     completion(.failure(error))
                 }
 
